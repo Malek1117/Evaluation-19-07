@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Online Jewellery Store</title>
+        <style>
+            #product{
+                display: grid;
+                padding: 5%;
+                grid-gap: 5%;
+                grid-template-columns: repeat(4, 20%);
+            }
+            img{
+                height: 250px;
+                width: 100%;
+                border-radius: 10px;
+            }
+            span{
+                font-size: 30px;
+                font-weight: 500;
+            }
+            #top{
+               text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="top">
+            <span>Home</span><spna>   </spna><span onclick="goToCart()">Cart</span>
+        </div>
+        <button onclick="sortPriceLH()">Sort by price Low to High</button>
+        <button onclick="sortPriceHL()">Sort by price High to Low</button>
+        <div id="product"></div>
+    </body>
+</html>
+<script>
+    var jewellerys = [
+        {
+            image: "https://th.bing.com/th/id/OIP.vh62qwb6V8b9bLMujspdkQHaIo?w=157&h=183&c=7&o=5&dpr=1.1&pid=1.7",
+            sImage: "https://th.bing.com/th/id/OIP.xoIyCuP7xMS5Svz_aNgFWwHaHa?w=194&h=195&c=7&o=5&dpr=1.1&pid=1.7",
+            name: "Nacklace 1",
+            brand: "Tiffany",
+            price: 10000,
+        },
+        {
+            image: "https://th.bing.com/th/id/OIP.FpperL_yAcmds5NheWoaMQHaHA?w=194&h=183&c=7&o=5&dpr=1.1&pid=1.7",
+            sImage: "https://th.bing.com/th/id/OIP.vZBMDxTgITBrsZovMwv5nQHaHa?w=207&h=207&c=7&o=5&dpr=1.1&pid=1.7",
+            name: "Nacklace 2",
+            brand: "Cartier",
+            price: 8000,
+        },
+        {
+            image: "https://th.bing.com/th/id/OIP.wqOG_XP9rjQYg_wRPB3BRQHaHa?w=207&h=207&c=7&o=5&dpr=1.1&pid=1.7",
+            sImage: "https://th.bing.com/th/id/OIP.1UPAg6H53abMgMJMw6ZENQHaHa?w=191&h=191&c=7&o=5&dpr=1.1&pid=1.7",
+            name: "Nacklace 3",
+            brand: "Cartier",
+            price: 15000,
+        },
+        {
+            image: "https://th.bing.com/th/id/OIP.JWN-0J5HWa6ep_IXUqCkJwHaE8?w=282&h=188&c=7&o=5&dpr=1.1&pid=1.7",
+            sImage: "https://th.bing.com/th/id/OIP.3zpsFG-Va9DluOIRWcAwYAHaHa?w=196&h=196&c=7&o=5&dpr=1.1&pid=1.7",
+            name: "Nacklace 4",
+            brand: "Tiffany",
+            price: 20000,
+        },
+        {
+            image: "https://th.bing.com/th/id/OIP.cg3cd4B5Z-0FVT4aZlOehgHaJ5?w=193&h=257&c=7&o=5&dpr=1.1&pid=1.7",
+            sImage: "https://th.bing.com/th/id/OIP.4R6wqCo-UGC5alv1ttoIfAHaHa?w=197&h=197&c=7&o=5&dpr=1.1&pid=1.7",
+            name: "Nacklace 5",
+            brand: "Tiffany",
+            price: 25000,
+        },
+        {
+            image: "https://th.bing.com/th/id/OIP.eNidNZGBZCiWAVMV4njrAgHaHa?w=215&h=215&c=7&o=5&dpr=1.1&pid=1.7",
+            sImage: "https://th.bing.com/th/id/OIP.-5BSlomP4N_aCv296-XLSwHaHa?w=205&h=205&c=7&o=5&dpr=1.1&pid=1.7",
+            name: "Chain 1",
+            brand: "Cartier",
+            price: 1000,
+        },
+        {
+            image: "https://th.bing.com/th/id/OIP.5P9fKeCNAXUvobFCuMkezQHaJc?w=160&h=204&c=7&o=5&dpr=1.1&pid=1.7",
+            sImage: "https://th.bing.com/th/id/OIP.hfBmbBHc1AtMVhjQ5j_jzwHaF-?w=219&h=180&c=7&o=5&dpr=1.1&pid=1.7",
+            name: "Chain 2",
+            brand: "Cartier",
+            price: 5000,
+        },
+        {
+            image: "https://th.bing.com/th/id/OIP.m844jkCTZSAl43zhOc0JfwHaHa?w=194&h=194&c=7&o=5&dpr=1.1&pid=1.7",
+            sImage: "https://th.bing.com/th/id/OIP.KIk3zUxfUHjDh3yqmZxq1wHaHa?w=194&h=194&c=7&o=5&dpr=1.1&pid=1.7",
+            name: "Chain 3",
+            brand: "Tiffany",
+            price: 4000,
+        }
+    ];
+    
+    if(localStorage.getItem('jewellery') == null){
+        localStorage.setItem('jewellery', JSON.stringify(jewellerys));
+    }
+   
+    function shoWJewellery(x){
+
+        var data = x;
+
+        var data_div = document.getElementById('product');
+        
+        data_div.innerHTML = null;
+
+        data.forEach( function (el){
+            var div = document.createElement('div');
+
+            var img = document.createElement('img');
+            img.src = el.image;
+            
+            img.addEventListener("mouseover", function(){
+                img.src = el.sImage;
+                
+            });
+            img.addEventListener("mouseout", function () {
+                img.src = el.image;
+            });
+            
+            var p_name = document.createElement('p');
+            p_name.innerHTML = el.name;
+
+            var p_brand = document.createElement('p');
+            p_brand.innerHTML = el.brand;
+
+            var p_price = document.createElement('p');
+            p_price.innerHTML = el.price;
+
+            var button = document.createElement('button');
+            button.innerHTML = "Add to Cart";
+            button.addEventListener('click', function(){
+                addToCart(el);               
+            });
+            
+            
+            div.append(img, p_name, p_brand, p_price, button);
+
+            data_div.append(div);
+        });
+
+    }
+
+    shoWJewellery(JSON.parse(localStorage.getItem('jewellery')));
+
+    function addToCart(obj){
+
+        let array;
+
+        array = localStorage.getItem('jewellaryCart');
+
+        if (array == null) {
+            array = [];
+        } else {
+            array = JSON.parse(localStorage.getItem('jewellaryCart'));
+        }
+
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].name == obj.name) {
+                return alert('This product was already added !!!')
+            }
+        }
+
+        array.push(obj);
+
+        localStorage.setItem('jewellaryCart', JSON.stringify(array));
+
+        alert(`${obj.name} was added to the cart successfully.`)
+
+        
+    }
+
+    function goToCart(){
+        window.location.href = "cart.html";
+    }
+
+    function sortPriceLH(){
+        let data = JSON.parse(localStorage.getItem('jewellery'));
+
+        data = data.sort(function(a,b){
+            return a.price - b.price;
+        });
+
+        shoWJewellery(data);
+    }
+
+    function sortPriceHL() {
+            let data = JSON.parse(localStorage.getItem('jewellery'));
+
+            data = data.sort(function (a, b) {
+                return b.price - a.price;
+            });
+
+            shoWJewellery(data);
+        }
+
+</script>

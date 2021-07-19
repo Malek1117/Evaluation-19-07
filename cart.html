@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jewellery Cart</title>
+        <style>
+            #cart{
+                display: grid;
+                padding: 5%;
+                grid-gap: 5%;
+                grid-template-columns: repeat(4, 20%);
+            }
+            img{
+                height: 250px;
+                width: 100%;
+                border-radius: 10px;
+            }
+            span{
+                font-size: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 style="text-align: center;">The Cart</h1>
+        <div id="cart"></div>
+        <span>Total Price</span> <span> - </span> <span id="totalPrice"></span><br />                  
+        <input id="input" type="text" placeholder="Apply promo code here" />
+        <button onclick="applyPromo()">Apply</button>
+        <button onclick="detailPage()">Check Out</button>
+        
+    </body>
+</html>
+<script>
+    function showCart(){
+        var cart_data = JSON.parse(localStorage.getItem('jewellaryCart'));
+
+        var data_div = document.getElementById('cart');
+
+        cart_data.forEach(function (el) {
+            var div = document.createElement('div');
+
+            var img = document.createElement('img');
+            img.src = el.image;
+
+            img.addEventListener("mouseover", function () {
+                img.src = el.sImage;
+
+            });
+            img.addEventListener("mouseout", function () {
+                img.src = el.image;
+            });
+
+            var p_name = document.createElement('p');
+            p_name.innerHTML = el.name;
+
+            var p_brand = document.createElement('p');
+            p_brand.innerHTML = el.brand;
+
+            var p_price = document.createElement('p');
+            p_price.innerHTML = el.price;
+
+
+            div.append(img, p_name, p_brand, p_price);
+
+            data_div.append(div);
+        });
+
+        var total_price = document.getElementById('totalPrice');
+        var sum = 0;
+        for(let i=0; i<cart_data.length; i++){
+            sum+=cart_data[i].price;
+        }
+        total_price.innerHTML = sum;
+    }
+
+    showCart();
+
+    function applyPromo(){
+        let input = document.getElementById('input').value;
+
+        var price = document.getElementById('totalPrice');
+
+        if(input == 'masai30'){
+            price.innerHTML = price.innerHTML * (70/100);
+            alert("Your promo code was applied successfully!!");
+        } else {
+            
+            alert("wroge promo code")
+        }
+        document.getElementById('input').value = "";
+    }
+
+    function detailPage(){
+        window.location.href = "address.html";
+    }
+</script>

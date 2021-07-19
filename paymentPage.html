@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Make Payment</title>
+        <style>
+            input:nth-of-type(1){
+                width: 200px;
+            }
+            button{
+                display: block;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Enter your debit card detail for payment</h1>
+        <input type="number" placeholder="Enter Debit card 12 digit here" />
+        <input type="number" placeholder="month" />
+        <input type="number" placeholder="year" />
+        <input type="password" placeholder="cvv" />
+        <button onclick="placeOrder()">Place Order</button>
+    </body>
+
+</html>
+<script>
+    function placeOrder() {
+
+        setInterval(function(){
+            alert('Your order was placed successfully!!');
+            window.location.href = "products.html";
+
+            localStorage.removeItem('jewellaryCart');
+        },3000);
+        
+    }
+</script>
